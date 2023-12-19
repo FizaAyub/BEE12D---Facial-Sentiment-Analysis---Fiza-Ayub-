@@ -1,4 +1,4 @@
-#we are using Haarcascade technique for face detction
+#For Integrating Webcam we must have to run this code
 
 # function to convert the JavaScript object into an OpenCV image
 def js_to_image(js_reply):
