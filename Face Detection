@@ -1,0 +1,48 @@
+import cv2
+face_cascade = cv2.CascadeClassifier('/content/drive/MyDrive/Colab Notebooks/haarcascade_frontalface_default.xml')
+#-- 1. Load the cascades
+
+from google.colab.patches import cv2_imshow
+# start streaming video from webcam
+video_stream()
+# label for video
+label_html = 'Capturing...'
+# initialze bounding box to empty
+bbox = ''
+
+label_dict = {0:'Angry', 1: 'Disgust', 2: 'Fear', 3: 'Happy',4: 'Sad', 5:'Surprise',6: 'Neutral'}
+
+
+while True:
+ js_reply = video_frame(label_html, bbox)
+ if not js_reply:
+        break
+ img = js_to_image(js_reply["img"])
+
+
+
+ cap_img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+ faces = face_cascade.detectMultiScale(cap_img_gray, 1.1, 9)
+
+ for (x,y,w,h) in faces:
+
+   cv2.rectangle(cap_img_gray, (x,y), (x+w,y+h),(255,0,0),2)
+   roi_gray = cap_img_gray[y:y+h, x:x+w]
+   roi_gray = cv2.resize(roi_gray, (48,48))
+
+   predictions = predict_facial_expression_live(roi_gray)
+   emotion_label = numpy.argmax(predictions)
+
+   emotion_prediction = label_dict[emotion_label]
+
+   cv2.rectangle(img, (x, y), (x+w, y+h), (0, 255, 0), 2)
+
+   cv2.putText( img, emotion_prediction, (int(x), int(y)), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0,255,255), 2, cv2.LINE_AA )
+
+   print(f"your current emotion is {emotion_prediction}" )
+
+   if cv2.waitKey(10) == ord('b'):
+    break
+
+cv2.destroyAllWindows
