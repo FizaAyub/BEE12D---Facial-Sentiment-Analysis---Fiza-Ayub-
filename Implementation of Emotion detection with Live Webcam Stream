@@ -1,3 +1,24 @@
+from tensorflow.keras.preprocessing import image
+
+def predict_facial_expression_live(img):
+    """Predict facial expression for image"""
+    # Convert to array
+    rgb_array = image.img_to_array(img)
+    rgb_array = numpy.expand_dims(rgb_array, axis=0)
+
+    # Show image
+
+    # Make predictions
+    rgb_array = rgb_array / 255.0
+    prediction = cnn_model.predict(rgb_array)
+
+    # Draw the histogram
+    return prediction
+
+import cv2
+face_cascade = cv2.CascadeClassifier('/content/drive/MyDrive/Colab Notebooks/haarcascade_frontalface_default.xml')
+#-- 1. Load the cascades
+
 from google.colab.patches import cv2_imshow
 # start streaming video from webcam
 video_stream()
