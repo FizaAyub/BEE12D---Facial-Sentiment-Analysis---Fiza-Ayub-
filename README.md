@@ -9,7 +9,7 @@ To Do list:
 - Create an architecture/model for classification of 7 different emotions
     - Target for better accuracy
     - Test the model on local files
-- Study face detection techniques/models 
+- Study face detection technique using Haarcascade 
     - Check out how to detect faces via webcam
 - Study how to use webcam on google collab
 - Implement our model for live inference through webcam on google collab
